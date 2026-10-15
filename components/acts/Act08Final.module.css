@@ -1,0 +1,96 @@
+.act {
+  height: 200vh;
+  background: #070c10;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: calc(var(--nav-h) + 1rem) 0 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 55%, #10202c 0%, #070c10 70%);
+}
+
+/* Cold rim glow behind the product. */
+.halo {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: min(80vw, 46rem);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) scale(1);
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgb(74 159 212 / 0.24) 0%,
+    rgb(28 79 115 / 0.16) 35%,
+    transparent 66%
+  );
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* The wordmark as architecture, sitting behind the bottle. */
+.ghost {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  font-size: clamp(3rem, 13vw, 13rem);
+  font-weight: 700;
+  line-height: 1;
+  color: #eef1f3;
+  opacity: 0.1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.content {
+  position: relative;
+  z-index: 6;
+  /* Top left, where the bottle is only its narrow cap. */
+  align-self: start;
+  justify-self: start;
+  width: 100%;
+  padding-top: clamp(1rem, 6vh, 3rem);
+}
+
+.line {
+  margin: 0;
+  max-width: 12ch;
+  color: #eef1f3;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+
+@media (max-width: 767px) {
+  .act { height: 170vh; }
+  .ghost { font-size: clamp(2.25rem, 16vw, 4rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .act { height: auto; }
+  .sticky { position: relative; min-height: 100dvh; }
+}
+
+/* The reduced-motion-only product still. Hidden by default because the
+   shared BottleStage already carries the product on this frame. */
+.still { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .still {
+    display: block;
+    position: relative;
+    z-index: 5;
+    width: min(56vw, 20rem);
+    height: auto;
+    margin: 0 auto;
+    filter: drop-shadow(0 2rem 3rem rgb(7 12 16 / 0.6));
+  }
+  .content { align-self: center; text-align: center; }
+  .line { max-width: none; }
+}

@@ -1,0 +1,42 @@
+.wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.4;
+}
+
+.svg { width: 160%; height: 160%; margin: -30% 0 0 -30%; }
+
+.a, .b {
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+/* Two copies drifting past each other: the interference is the movement. */
+.a { animation: driftA 34s linear infinite; }
+.b { animation: driftB 47s linear infinite; opacity: 0.7; }
+
+@keyframes driftA {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(3%, -2%, 0) scale(1.08); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes driftB {
+  0%   { transform: translate3d(0, 0, 0) scale(1.14) rotate(0deg); }
+  50%  { transform: translate3d(-4%, 2.5%, 0) scale(1.02) rotate(1.5deg); }
+  100% { transform: translate3d(0, 0, 0) scale(1.14) rotate(0deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a, .b { animation: none; }
+  .wrap { opacity: 0.28; }
+}
+
+/* Continuous full-bleed animation is not worth the battery on phones. */
+@media (max-width: 767px) {
+  .a, .b { animation: none; }
+  .wrap { opacity: 0.3; }
+}

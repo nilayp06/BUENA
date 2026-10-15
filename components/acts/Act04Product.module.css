@@ -1,0 +1,169 @@
+.act {
+  height: 300vh;
+  background: var(--bg);
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  align-items: center;
+  padding-block: calc(var(--nav-h) + 1rem) clamp(2rem, 6vh, 4rem);
+  overflow: hidden;
+}
+
+/* Left-aligned so the centred bottle never crosses the heading, and to
+   match the editorial voice used by every other act. */
+.head { display: grid; justify-items: start; gap: 0.75rem; }
+
+.title {
+  margin: 0;
+  color: var(--fg);
+  letter-spacing: -0.02em;
+}
+
+.sub {
+  margin: 0;
+  font-size: 0.6875rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- the diagram ---------- */
+.diagram { position: relative; height: 100%; width: 100%; }
+
+.wires {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.wire {
+  fill: none;
+  stroke: var(--fg);
+  stroke-width: 1;
+  opacity: 0.32;
+  vector-effect: non-scaling-stroke;
+}
+
+.nodes { list-style: none; margin: 0; padding: 0; }
+
+.node {
+  position: absolute;
+  display: grid;
+  gap: 0.2rem;
+  width: max-content;
+  max-width: 11rem;
+  color: var(--fg);
+}
+
+.node[data-side='right'] { text-align: right; justify-items: end; }
+.node { will-change: transform, opacity; }
+
+.symbol {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+}
+
+.amount {
+  display: flex;
+  align-items: baseline;
+  gap: 0.15rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.amount small {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.mineral {
+  font-size: 0.625rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Placement comes from the NODES table as inline styles - see the act. */
+
+/* ---------- closing claim ---------- */
+.claim { display: grid; gap: 0.875rem; justify-items: center; text-align: center; }
+
+.claimText {
+  margin: 0;
+  max-width: 34ch;
+  font-size: clamp(0.9375rem, 1.3vw, 1.0625rem);
+  line-height: 1.6;
+  color: var(--fg);
+  opacity: 0.85;
+}
+
+.claimMeta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 0;
+  font-size: 0.625rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- mobile: still pinned, but the radial diagram becomes a grid ----------
+   The bottle is a fixed-position element, so if this act scrolled normally
+   the mineral list would slide underneath it. Keeping the pin holds the
+   product and its data stable relative to one another. */
+@media (max-width: 767px) {
+  .act { height: 220vh; }
+  .sticky { padding-block: calc(var(--nav-h) + 0.5rem) clamp(1.5rem, 5vh, 2.5rem); }
+
+  .wires { display: none; }
+
+  .diagram { display: grid; align-items: end; }
+
+  .nodes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem 1rem;
+    padding-inline: var(--shell);
+    align-self: end;
+  }
+
+  .node {
+    /* Inline left/top/transform from the radial layout must not leak into
+       the stacked mobile grid. */
+    position: static;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    max-width: none;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--rule);
+  }
+  .node[data-side='right'] { text-align: left; justify-items: start; }
+
+  .amount { font-size: 1.5rem; }
+  .claimText { font-size: 0.875rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .act { height: auto; }
+  .sticky { position: relative; height: auto; display: block; }
+  .diagram { min-height: 60vh; }
+}

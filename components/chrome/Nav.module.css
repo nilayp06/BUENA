@@ -1,0 +1,159 @@
+.bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: clamp(1rem, 2.5vw, 2rem);
+  height: var(--nav-h);
+  padding-inline: var(--shell);
+  color: var(--fg);
+  transition: background-color 0.5s var(--e-out), backdrop-filter 0.5s var(--e-out),
+              box-shadow 0.5s var(--e-out);
+}
+
+/* Transparent over the hero, then a quiet frosted bar once we pass it. */
+.condensed {
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: 0 1px 0 var(--rule);
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.1rem;
+  /* Text box is only 28px; hold the hit area at the 44px minimum. */
+  min-height: 2.75rem;
+  margin-right: auto;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brandMark {
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.brandSub {
+  white-space: nowrap;
+  font-size: 0.5625rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  line-height: 1;
+}
+
+.links { display: flex; flex-wrap: nowrap; gap: clamp(1.25rem, 2.4vw, 2.25rem); }
+
+.link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  white-space: nowrap;
+  flex: 0 0 auto;
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.72;
+  transition: opacity var(--d-fast) var(--e-out);
+}
+.link:hover { opacity: 1; }
+
+/* Underline wipes in from the left, out to the right. */
+.link::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0.65rem;
+  width: 100%; height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: 100% 50%;
+  transition: transform var(--d-base) var(--e-out);
+}
+.link:hover::after { transform: scaleX(1); transform-origin: 0 50%; }
+
+.cta {
+  white-space: nowrap;
+  flex: 0 0 auto;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: inherit;
+  padding: 0.7rem 1.25rem;
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--rule);
+  transition: background-color var(--d-fast) var(--e-out), color var(--d-fast) var(--e-out);
+}
+.cta:hover { background: var(--fg); color: var(--bg); }
+
+/* ---------- mobile ---------- */
+.burger {
+  display: none;
+  width: 44px; height: 44px;
+  align-items: center; justify-content: center;
+  flex-direction: column; gap: 6px;
+  background: none; border: 0; cursor: pointer;
+  color: inherit;
+  touch-action: manipulation;
+}
+
+.burgerLine {
+  display: block;
+  width: 22px; height: 1.5px;
+  background: currentColor;
+  transition: transform var(--d-base) var(--e-out), opacity var(--d-fast) var(--e-out);
+}
+.burgerLine:first-child.burgerOpen { transform: translateY(3.75px) rotate(45deg); }
+.burgerLine:last-child.burgerOpen  { transform: translateY(-3.75px) rotate(-45deg); }
+
+.panel {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: var(--nav-h) var(--shell) 3rem;
+  background: var(--bg);
+  visibility: hidden;
+  opacity: 0;
+}
+
+.panelRow { display: block; overflow: hidden; }
+
+.panelLink {
+  display: block;
+  padding-block: 0.35rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 12vw, 4rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.panelCta { color: var(--accent); }
+
+@media (max-width: 1023px) {
+  .links, .cta { display: none; }
+  .burger { display: flex; }
+  .panel { display: flex; }
+}

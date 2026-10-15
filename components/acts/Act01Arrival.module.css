@@ -1,0 +1,123 @@
+.act {
+  /* Scroll distance for the opening sequence. */
+  height: 230vh;
+  background: var(--bv-ink, #070c10);
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.content {
+  position: relative;
+  z-index: 5; /* below the bottle stage (z-20): the product occludes the type */
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  align-items: center;
+  padding-block: calc(var(--nav-h) + 1.5rem) clamp(4rem, 12vh, 8rem);
+}
+
+.wordmark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 0;
+  color: var(--bv-alu-hi, #eef1f3);
+  text-align: center;
+  /* Lets the ridgeline read faintly through the letterforms. */
+  mix-blend-mode: soft-light;
+}
+
+.line { display: block; overflow: hidden; }
+
+.word {
+  display: block;
+  line-height: 0.82;
+  letter-spacing: -0.035em;
+  will-change: transform;
+}
+/* Optical offset: VIDA is the shorter word, nudge it into alignment. */
+.line:last-child .word { letter-spacing: 0.01em; }
+
+.bottom {
+  align-self: end;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2rem;
+  width: 100%;
+  color: var(--bv-alu, #c9cdd2);
+}
+
+.origin, .volume {
+  margin: 0;
+  font-size: clamp(0.6875rem, 0.95vw, 0.8125rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.volume { text-align: right; opacity: 0.6; }
+
+/* ---------- scroll cue ---------- */
+.cue {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1.25rem, 4vh, 2.5rem);
+  z-index: 6;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  color: var(--bv-alu, #c9cdd2);
+}
+
+.cueLabel {
+  font-size: 0.5625rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+.cueTrack {
+  position: relative;
+  width: 1px;
+  height: 3rem;
+  background: rgb(238 241 243 / 0.2);
+  overflow: hidden;
+}
+
+.cueDot {
+  position: absolute;
+  inset-inline: 0;
+  height: 40%;
+  background: var(--bv-alu-hi, #eef1f3);
+  animation: cue 2.4s var(--e-inout) infinite;
+}
+
+@keyframes cue {
+  0%   { transform: translateY(-100%); }
+  60%  { transform: translateY(250%); }
+  100% { transform: translateY(250%); }
+}
+
+@media (max-width: 767px) {
+  .act { height: 190vh; }
+  /* The cue sits where the meta line lands on a phone, and a touch
+     device does not need to be told it can scroll. */
+  .cue { display: none; }
+  .wordmark { mix-blend-mode: normal; opacity: 0.95; }
+  .bottom { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .volume { text-align: left; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .act { height: auto; }
+  .sticky { position: relative; }
+  .cueDot { animation: none; }
+}

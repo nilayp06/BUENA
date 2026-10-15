@@ -1,0 +1,71 @@
+.act {
+  min-height: 105vh;
+  display: flex;
+  align-items: center;
+  padding-block: clamp(6rem, 18vh, 12rem);
+  background: var(--bg);
+  overflow: hidden;
+}
+
+/* Soft daylight bloom that rises through the section. */
+.wash {
+  position: absolute;
+  inset: -20% -10% auto;
+  height: 120%;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 50% 40% at 50% 30%, rgb(255 255 255 / 0.9) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgb(74 159 212 / 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: 1fr;
+}
+
+.eyebrow { margin: 0 0 clamp(1.5rem, 4vw, 2.5rem); }
+
+.statement {
+  margin: 0;
+  color: var(--fg);
+  /* Pull the second line in so the bottle sits in the notch it creates. */
+  max-width: 18ch;
+}
+
+.statement em {
+  font-style: italic;
+  font-variation-settings: "SOFT" 40, "WONK" 1, "opsz" 144;
+  color: var(--accent);
+}
+
+.aside {
+  display: grid;
+  gap: 1.25rem;
+  justify-self: end;
+  max-width: 34ch;
+  padding-top: clamp(1rem, 4vw, 3rem);
+}
+
+.note {
+  margin: 0;
+  font-size: 0.6875rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@media (min-width: 900px) {
+  .content { grid-template-columns: 1.35fr 1fr; align-items: end; }
+  .eyebrow { grid-column: 1 / -1; }
+}
+
+@media (max-width: 767px) {
+  .act { min-height: auto; padding-block: clamp(5rem, 14vh, 8rem); }
+  /* Clear the space the pinned bottle occupies on small screens. */
+  .aside { justify-self: start; padding-top: 34vh; }
+}

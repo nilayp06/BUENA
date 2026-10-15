@@ -1,0 +1,148 @@
+.act {
+  background: var(--bg);
+}
+
+/* Owns the scroll distance for the three-step dissolve. */
+.stickyWrap {
+  position: relative;
+  height: 320vh;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow: hidden;
+  background: #0c2434;
+}
+
+.label, .etch, .place {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  will-change: transform, opacity;
+}
+
+.label { z-index: 3; }
+.etch  { z-index: 2; filter: saturate(0.55) contrast(1.08) brightness(0.86); }
+.place { z-index: 1; }
+
+.topo {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.contour {
+  fill: none;
+  stroke: var(--bv-alu-hi, #eef1f3);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background:
+    linear-gradient(to top, rgb(12 36 52 / 0.92) 0%, rgb(12 36 52 / 0.35) 42%, transparent 70%),
+    linear-gradient(to right, rgb(12 36 52 / 0.7) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 6;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 1.25rem;
+  padding-block: 0 clamp(3.5rem, 12vh, 7rem);
+  color: #e6f0f6;
+}
+
+.title { margin: 0; max-width: 14ch; }
+.title em {
+  font-style: italic;
+  font-variation-settings: "SOFT" 40, "WONK" 1, "opsz" 144;
+  color: #7ec4ec;
+}
+
+.body { max-width: 44ch; color: #e6f0f6; opacity: 0.85; }
+
+/* ---------- the two facts below the sticky frame ---------- */
+.facts {
+  position: relative;
+  z-index: 6;
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 5rem);
+  padding-block: clamp(5rem, 14vh, 9rem);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.fact { display: grid; gap: 0.75rem; align-content: start; }
+
+.figure {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 11vw, 9rem);
+  font-weight: 300;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.figure small {
+  font-family: var(--font-sans);
+  font-size: clamp(0.75rem, 1.4vw, 1rem);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+}
+
+.figureSmall {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.6vw, 3rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+}
+
+.factLabel {
+  font-size: 0.625rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--rule);
+}
+
+.factBody { margin: 0; max-width: 42ch; line-height: 1.7; opacity: 0.8; }
+
+@media (min-width: 900px) {
+  .facts { grid-template-columns: 1.2fr 1fr; }
+}
+
+@media (max-width: 767px) {
+  .stickyWrap { height: 260vh; }
+  .content { padding-bottom: clamp(3rem, 10vh, 5rem); }
+  .scrim {
+    background: linear-gradient(to top, rgb(12 36 52 / 0.94) 0%, rgb(12 36 52 / 0.4) 48%, transparent 76%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stickyWrap { height: auto; }
+  .sticky { position: relative; height: 70vh; }
+}

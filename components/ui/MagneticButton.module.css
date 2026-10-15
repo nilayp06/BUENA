@@ -1,0 +1,68 @@
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  /* >=44px touch target regardless of font size. */
+  min-height: 3rem;
+  padding: 0.875rem 1.75rem;
+  border: 0;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color var(--d-fast) var(--e-out), border-color var(--d-fast) var(--e-out);
+  touch-action: manipulation;
+}
+
+.label, .arrow {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+}
+
+.arrow {
+  transition: transform var(--d-base) var(--e-out);
+}
+
+/* Fill wipe that grows from the bottom on hover. */
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  transform: scaleY(0);
+  transform-origin: 50% 100%;
+  transition: transform var(--d-base) var(--e-out);
+}
+
+.solid {
+  background: var(--bv-red, #a81c24);
+  color: #fff;
+}
+.solid::before { background: var(--bv-alu-hi, #eef1f3); }
+.solid:hover { color: var(--bv-ink, #070c10); }
+
+.ghost {
+  background: transparent;
+  color: var(--fg);
+  box-shadow: inset 0 0 0 1px var(--rule);
+}
+.ghost::before { background: var(--fg); }
+.ghost:hover { color: var(--bg); }
+
+.btn:hover::before { transform: scaleY(1); }
+.btn:hover .arrow { transform: translateX(4px); }
+
+.btn:active { transform: scale(0.985); }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn::before { transition: none; }
+  .btn:hover .arrow { transform: none; }
+}

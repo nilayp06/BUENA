@@ -1,0 +1,27 @@
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.12;
+  mix-blend-mode: overlay;
+  /* Static texture: promote once, never repaint. */
+  will-change: transform;
+  animation: drift 6s steps(6, end) infinite;
+}
+
+.svg { width: 100%; height: 100%; }
+
+/* Tiny stepped offsets read as living grain without animating a filter. */
+@keyframes drift {
+  0%   { transform: translate3d(0, 0, 0); }
+  20%  { transform: translate3d(-1.2%, 0.8%, 0); }
+  40%  { transform: translate3d(0.9%, -1.1%, 0); }
+  60%  { transform: translate3d(-0.7%, -0.6%, 0); }
+  80%  { transform: translate3d(1.1%, 0.9%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain { animation: none; opacity: 0.08; }
+}

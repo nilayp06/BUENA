@@ -1,0 +1,75 @@
+.act {
+  background: var(--bg);
+  padding-block: clamp(5rem, 16vh, 11rem);
+  overflow: hidden;
+}
+
+.head { margin-bottom: clamp(3rem, 9vh, 6rem); }
+.head > :global(.eyebrow) { margin: 0 0 1.5rem; }
+
+.title { margin: 0; color: var(--fg); }
+.title em {
+  font-style: italic;
+  font-variation-settings: "SOFT" 40, "WONK" 1, "opsz" 144;
+  color: var(--accent);
+}
+
+.list { list-style: none; margin: 0; padding-inline: var(--shell); display: grid; }
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(1.5rem, 5vw, 5rem);
+  align-items: start;
+  padding-block: clamp(2.5rem, 7vh, 4.5rem);
+}
+
+/* The connector rule, drawn on arrival - the diagram's lines straightened. */
+.rule {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: var(--rule);
+  transform-origin: 0 50%;
+}
+
+.index {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 11vw, 9rem);
+  font-weight: 200;
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  color: var(--fg);
+  opacity: 0.16;
+  font-variant-numeric: tabular-nums;
+  will-change: transform;
+}
+
+.rowBody { display: grid; gap: 1rem; max-width: 46ch; padding-top: 0.5rem; }
+
+.icon { width: 2.25rem; height: 2.25rem; color: var(--accent); }
+
+.rowTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+
+.rowText {
+  margin: 0;
+  font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
+  line-height: 1.7;
+  color: var(--fg);
+  opacity: 0.75;
+}
+
+@media (max-width: 767px) {
+  .row { gap: 1rem; grid-template-columns: 1fr; }
+  .index { opacity: 0.2; }
+}

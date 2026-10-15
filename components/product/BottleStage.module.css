@@ -1,0 +1,94 @@
+/* The fixed layer the product lives on for the whole page. */
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  /* Own compositing layer so scrubbing the bottle never repaints the page. */
+  contain: layout paint;
+}
+
+.bottle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  /* Centring fallback for the frame before JS poses the bottle. */
+  transform: translate(-50%, -50%);
+  width: min(23vw, 17.5rem);
+  will-change: transform, opacity, filter;
+  transform-origin: 50% 50%;
+}
+
+.img {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Grounds the bottle in whatever environment is behind it. */
+  filter: drop-shadow(0 2.5rem 3.5rem rgb(7 12 16 / 0.55));
+}
+
+/* Rim light / atmospheric bloom behind the bottle. */
+.glow {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 48%;
+  width: 190%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgb(74 159 212 / 0.28) 0%,
+    rgb(74 159 212 / 0.1) 32%,
+    transparent 64%
+  );
+  pointer-events: none;
+}
+
+/* Soft contact shadow so it reads as sitting in the scene, not floating. */
+.contact {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  bottom: -4%;
+  width: 78%;
+  height: 7%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at 50% 50%, rgb(7 12 16 / 0.6) 0%, transparent 70%);
+  filter: blur(6px);
+}
+
+/* Pose markers are invisible measuring points, not layout. */
+.pose {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+@media (max-width: 767px) {
+  .bottle { width: min(46vw, 15rem); }
+  .glow { width: 165%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bottle { will-change: auto; }
+
+  /*
+   * With motion reduced there is no choreography, so a fixed stage would
+   * leave the bottle hovering over every section for the whole page. Anchor
+   * it to the opening frame instead and let it scroll away like any other
+   * element; Act 08 renders its own static product image so the story still
+   * ends on the product.
+   */
+  .stage {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 100dvh;
+  }
+}
